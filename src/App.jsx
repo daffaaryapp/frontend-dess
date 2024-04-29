@@ -1,9 +1,13 @@
+//import toaster
+import { Toaster } from "react-hot-toast"
+
 function App() {
 
   return (
-    <div className="App">
-        Hello, Daffa Aryasatya Pratama
-    </div>
+    <>
+      <h1>daff</h1>
+      <Toaster/>
+    </>
   )
 
 }
