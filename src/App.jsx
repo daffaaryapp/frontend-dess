@@ -1,15 +1,17 @@
-//import toaster
-import { Toaster } from "react-hot-toast"
+//import routes
+import Routes from './routes';
+
+//import Toaster
+import { Toaster } from 'react-hot-toast';
 
 function App() {
 
   return (
     <>
-      <h1>daff</h1>
-      <Toaster/>
+      <Routes />
+      <Toaster />
     </>
   )
-
 }
 
 export default App

@@ -1,27 +1,30 @@
-import axios from "axios";
+//import axios
+import axios from 'axios'
 
-import Cookies from "js-cookie";
+//import js cookie
+import Cookies from 'js-cookie';
 
 const Api = axios.create({
-    //set endpoint
-    baseURL: 'htttps://'
+    
+    //set endpoint API
+    baseURL: 'http://prabu.prabu33.appdev.my.id/',
 
     //set header axios
-    headers:{
-        'Accept':'application/json'
-        'Content-Type': 'application/json',
+    headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
     }
 });
 
 //handle unathenticated
-Api.interceptors.response.use(function(response){
+Api.interceptors.response.use(function (response) {
 
-    //retunr response
+    //return response
     return response;
-}, ((error)=>{
+}, ((error) => {
 
     //check if response unauthenticated
-    if (401 === error.response.status){
+    if (401 === error.response.status) {
 
         //remove token
         Cookies.remove('token');
@@ -29,23 +32,23 @@ Api.interceptors.response.use(function(response){
         //remove user
         Cookies.remove('user');
 
-        //remove user
+        //remove permissions
         Cookies.remove('permissions');
 
-        //redirect '/'
-        window.location='/';
-
-    }else if(403 === error.response.status){
-
-        //redirect '/forbidder'
+        //redirect "/"
+        window.location = '/';
+        
+    } else if(403 === error.response.status) {
+    
+        //redirect "/forbidden"
         window.location = '/forbidden';
 
-    } else{
+    }else {
 
         //reject promise error
         return Promise.reject(error);
-
     }
 }));
+
 
 export default Api
