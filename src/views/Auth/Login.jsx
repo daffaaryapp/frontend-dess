@@ -2,12 +2,12 @@
 import { useState } from "react";
 
 //import service
-import Api from '../../services/Api';
+import Api from "../../services/Api";
 
-//import LayoutAuth
-import LayoutAuth from '../../layouts/Auth';
+//import layoutAuth
+import LayoutAuth from "../../layouts/Auth";
 
-//import cookie
+//import Cookie
 import Cookies from "js-cookie";
 
 //import Navigate
@@ -16,16 +16,16 @@ import { Navigate, useNavigate } from "react-router-dom";
 //import toast
 import toast from "react-hot-toast";
 
-export default function login(){
+export default function login() {
   //title page
-  document.title = 'Login - Admin dAFFA'
+  document.title = "Login - dapps";
 
   //navigate
   const navigate = useNavigate();
 
   //define state
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   //define state errors
   const [errors, setErrors] = useState([]);
@@ -34,36 +34,42 @@ export default function login(){
   const login = async (e) => {
     e.preventDefault();
 
-    await Api.post('/api/login',{
+    await Api.post("/api/login", {
       //data
-      email : email,
+      email: email,
       password: password,
     })
-      .then((response)=>{
+      .then((response) => {
         //set token to cookies
-        Cookies.set('token', response.data.token);
+        Cookies.set("token", response.data.token);
 
         //set user to cookies
-        Cookies.set('user',JSON.stringify(response.data.user));
+        Cookies.set("user", JSON.stringify(response.data.user));
 
         //set permissions to cookies
-        Cookies.set('permissions', JSON.stringify(response.data.user.permissions));
+        Cookies.set("permissions", JSON.stringify(response.data.permissions));
 
         //show toast
-        toast.success('Login Successfully',{
-          position: 'top-right',
-          duration:4000,
-
+        toast.success("Login Successfully!", {
+          position: "top-right",
+          duration: 4000,
         });
 
-        //rediresct dashboard page
-        navigate('/admin/dashboard');
+        //redirect dashboard page
+        navigate("/admin/dashboard");
       })
-      .catch((error)=> {
-        //set reponse error to state
+      .catch((error) => {
+        //set response error to state
         setErrors(error.response.data);
       });
   };
+
+  //check if cookie already exists
+  if (Cookies.get("token")) {
+    //redirect dashboard page
+    return <Navigate to="/admin/dashboard" replace />;
+  }
+
   return (
     <LayoutAuth>
       <div
@@ -76,7 +82,7 @@ export default function login(){
           <div className="text-center mb-5">
             <img src={"/images/logo-jbg.png"} width={"100"} />
             <h4>
-              <strong className="text-white mt-3"> dapps</strong>
+              <strong className="text-white mt-3">Dapps</strong>
             </h4>
           </div>
           <div className="card rounded-4 shadow-sm border-top-success">
@@ -130,7 +136,7 @@ export default function login(){
 
                   <button
                     type="submit"
-                    className="btn btn-primary px-4 float-end rounded-2"
+                    className="btn btn-primary px-4 float-end rounded-4"
                   >
                     LOGIN
                   </button>

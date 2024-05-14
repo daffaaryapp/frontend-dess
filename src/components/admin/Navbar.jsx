@@ -1,70 +1,74 @@
-import React,{useState} from "react";
+//import React
+import React, { useState } from "react";
 
+//import Link from react router dom
 import { Link, useNavigate } from "react-router-dom";
 
-import Api from '../../services/Api';
+//import API
+import Api from "../../services/Api";
 
+//import js cookie
 import Cookies from "js-cookie";
 
+//import toast
 import toast from "react-hot-toast";
 
-export default function navbar(){
-    //state toggle
-    const [siderToggle, setSidebarToggle] = useState(false);
+export default function navbar() {
+  //state toggle
+  const [sidebarToggle, setSidebarToggle] = useState(false);
 
-    //function toggle handler
-    const siderbarToggleHnadler = (e) => {
-        e.preventDefault();
+  //function toggle hanlder
+  const sidebarToggleHandler = (e) => {
+    e.preventDefault();
 
-        if(!sidebarToggle){
-            //add class on body
-            document.body.classList.add("sb-sidenav-toggled");
+    if (!sidebarToggle) {
+      //add class on body
+      document.body.classList.add("sb-sidenav-toggled");
 
-            //set state 'sidebartoggle' to true
-            setSidebarToggle(true);
-        }else{
-            //remove class on body
-            document.body.classList.remove('sb-sidenav-toggled');
+      //set state "sidebarToggle" to true
+      setSidebarToggle(true);
+    } else {
+      //remove class on body
+      document.body.classList.remove("sb-sidenav-toggled");
 
-            //set state 'sidebartoggle' to false
-            setSidebarToggle(false);
-        }
+      //set state "sidebarToggle" to false
+      setSidebarToggle(false);
+    }
+  };
 
-    };
+  //navigate
+  const navigate = useNavigate();
 
-    //navigate
-    const navigate = useNavigate();
+  //method logout
+  const logout = async (e) => {
+    e.preventDefault();
 
-    //method logout
-    const logout = async (e) => {
-        e.preventDefault();
+    //fetch to rest api for logout
+    await Api.post("/api/logout").then(() => {
+      //remove user from cookies
+      Cookies.remove("user");
 
-        //fetch to rest api for logout
-        await Api.post('/api/logout').then(()=>{
-            //remove user from cookies
-            Cookies.remove('user');
+      //remove token from cookies
+      Cookies.remove("token");
 
-            //remove token from cookies
-            Cookies.remove('token');
+      //remove permissions from cookies
+      Cookies.remove("permissions");
 
-            //remove permissions from cookies
-            Cookies.remove('permissions');
+      //show toast
+      toast.success("Logout Successfully!", {
+        position: "top-right",
+        duration: 4000,
+      });
 
-            //show toast
-            toast.success('Logout Successfully!',{
-                position: 'top-right',
-                duration: 4000,
-            });
+      //redirect to login page
+      navigate("/login");
+    });
+  };
 
-            //redirect to login page
-            navigate("/login");
-        });
-    };
-
-    return(
-        <nav className="sb-topnav navbar navbar-expand navbar-dark bg-green border-top-yellow shadow-sm fixed-top" style={{paddingLeft: 0,height: '56px',zIndex: '1039' }}>
+  return (
+    <nav className="sb-topnav navbar navbar-expand navbar-dark bg-green border-top-yellow shadow-sm fixed-top" style={{paddingLeft: 0,height: '56px',zIndex: '1039' }}>
       <a className="navbar-brand ps-3 fw-bold" href="index.html">
-        Dapaaa
+        Dapps
       </a>
       <button
         className="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
@@ -101,7 +105,5 @@ export default function navbar(){
         </li>
       </ul>
     </nav>
-    );
-
-
+  );
 }

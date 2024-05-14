@@ -1,12 +1,12 @@
 //import layoutAuth
-import LayoutAuth from '../../layouts/Auth';
+import LayoutAuth from "../../layouts/Auth";
 
-//impor link from react router dom 
+//import Link from react router dom
 import { Link } from "react-router-dom";
 
-export default function Forbidden(){
-    return(
-        <LayoutAuth>
+export default function Forbidden() {
+  return (
+    <LayoutAuth>
       <div className="container-fluid mb-5 mt-5">
         <div className="row">
           <div className="col-12 col-sm-12 col-xl-12 mb-4">
@@ -28,5 +28,5 @@ export default function Forbidden(){
         </div>
       </div>
     </LayoutAuth>
-    );
+  );
 }
