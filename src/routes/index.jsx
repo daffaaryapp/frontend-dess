@@ -17,6 +17,9 @@ import Forbidden from "../views/Auth/Forbidden";
 //import view dashboard
 import Dashboard from "../views/Admin/Dashboard/Index";
 
+//import view permissions
+import PermissionsIndex from "../views/Admin/Permissions/Index";
+
 export default function RoutesIndex() {
   return (
     <Routes>
@@ -32,6 +35,16 @@ export default function RoutesIndex() {
         element={
           <PrivateRoutes>
             <Dashboard />
+          </PrivateRoutes>
+        }
+      />
+
+      {/* private route "/admin/permissions" */}
+      <Route
+        path="/admin/permissions"
+        element={
+          <PrivateRoutes>
+            <PermissionsIndex />
           </PrivateRoutes>
         }
       />
